@@ -17,5 +17,6 @@ def enviar_operacao(operacao):
         print(f"Resultado da operação: {resultado}")
 
 if __name__ == "__main__":
-    operacao = input("Digite a operação matemática (ex: 5+3): ")
-    enviar_operacao(operacao)
+    while True:
+        operacao = input("Digite a operação matemática (ex: 5+3): ")
+        enviar_operacao(operacao)

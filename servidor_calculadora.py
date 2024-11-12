@@ -1,17 +1,15 @@
 import socket
 import psutil
 from concurrent.futures import ThreadPoolExecutor
-
+import threading
 from env import *
 
 # Função para calcular a operação
 def calcular_operacao(operacao):
     try:
-        # Validar e processar a operação com segurança (evitar o uso de eval)
         if not operacao:
             raise ValueError("Operação inválida.")
         
-        # Simples parser de operações matemáticas
         parts = operacao.split()
         if len(parts) != 3:
             raise ValueError("Formato inválido de operação.")
@@ -86,21 +84,22 @@ def servidor_servico(host, porta_servico):
     except Exception as e:
         print(f"Erro no servidor de cálculos: {e}")
 
-# Função principal para iniciar os servidores
+# Função principal para iniciar os servidores em threads
 def iniciar_servidor(host, porta_status, porta_servico):
-    # Inicia os dois servidores em uma única execução
-    # Um servidor para a porta de status
-    servidor_status(host, porta_status)
+    # Inicia o servidor de status em uma thread separada
+    status_thread = threading.Thread(target=servidor_status, args=(host, porta_status))
+    status_thread.start()
     
-    # Um servidor para a porta de cálculo (usando o pool de threads para processar as requisições)
-    servidor_servico(host, porta_servico)
+    # Inicia o servidor de serviço em uma thread separada
+    servico_thread = threading.Thread(target=servidor_servico, args=(host, porta_servico))
+    servico_thread.start()
 
 # Inicia dois servidores de cálculo para testes (no mesmo host, com diferentes portas)
 if __name__ == "__main__":
     # Iniciando servidores para duas portas de cálculo diferentes
     for servidor in servidores:
-        iniciar_servidor(servidor)
-
-    # Para manter os servidores rodando, você pode adicionar um loop infinito ou um controle de encerramento.
+        iniciar_servidor(servidor['host'], servidor['porta_status'], servidor['porta_servico'])
+    
+    # Mantém o programa ativo enquanto os servidores rodam em segundo plano
     while True:
-        pass  # Servidores continuam funcionando em segundo plano
+        pass  # Os servidores continuam funcionando em segundo plano

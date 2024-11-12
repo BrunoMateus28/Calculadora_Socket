@@ -1,9 +1,9 @@
-host = "127.0.0.1" #Endereço do Host
-porta_proxy = 65432 #Porta de Proxy
-porta_servico1 = 65433 #Porta de serviço do Servidor Nº 1
-porta_status1 = 65434 #Porta de status do Servidor Nº 1
-porta_servico2 = 65435 #Porta de serviço do Servidor Nº 2
-porta_status2 = 654336 #Porta de status do Servidor Nº 2
+host = "192.168.0.15" #Endereço do Host
+porta_proxy = 50000         # Porta de Proxy
+porta_servico1 = 50001      # Porta de serviço do Servidor Nº 1
+porta_status1 = 50002       # Porta de status do Servidor Nº 1
+porta_servico2 = 50003      # Porta de serviço do Servidor Nº 2
+porta_status2 = 50004       # Porta de status do Servidor Nº 2
 
 #Lista de servidores
 servidores = [

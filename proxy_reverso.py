@@ -36,12 +36,13 @@ def atender_cliente(cliente_socket):
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((servidor['host'], servidor['porta_servico']))
+            print(f"Conectado ao servidor {servidor['host']}:{servidor['porta_servico']}")
             s.sendall(operacao.encode())
             resultado = s.recv(1024).decode()
-
+            print(f"Resultado a ser enviado: {resultado}")
         cliente_socket.sendall(resultado.encode())
     except Exception as e:
-        cliente_socket.sendall("Erro interno".encode())
+        cliente_socket.sendall(f"Erro interno: {e}".encode())
     finally:
         cliente_socket.close()
 
@@ -56,6 +57,7 @@ def iniciar_proxy():
             with ThreadPoolExecutor(max_workers=10) as executor:
                 while True:
                     cliente_socket, _ = s.accept()
+                    print("Cliente Conectado!")
                     executor.submit(atender_cliente, cliente_socket)
     except Exception as e:
         print(f"Erro no Proxy: {e}")
