@@ -7,7 +7,6 @@ from env import *
 def obter_carga_servidor(host, porta):
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.settimeout(5)  # Timeout de 5 segundos
             s.connect((host, porta))
             carga = s.recv(1024).decode()
             return float(carga)
@@ -23,6 +22,7 @@ def escolher_servidor():
     for servidor in servidores:
         carga = obter_carga_servidor(servidor['host'], servidor['porta_status'])
         cargas.append((servidor, carga))
+        print(carga)
     cargas.sort(key=lambda x: x[1])
     return cargas[0][0]
 

@@ -82,4 +82,4 @@ def enviar_requisicao_invalida(servico_host, servico_porta):
 
 
 if __name__ == "__main__":
-    testar_concorrencia(host, porta_proxy, 10)  # Teste com 10 clientes simulados
+    testar_concorrencia(host, porta_proxy, 20)  # Teste com N clientes simulados

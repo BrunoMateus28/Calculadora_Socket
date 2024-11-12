@@ -1,5 +1,6 @@
 import socket
 import psutil
+import re
 from concurrent.futures import ThreadPoolExecutor
 import threading
 from env import *
@@ -7,16 +8,19 @@ from env import *
 # Função para calcular a operação
 def calcular_operacao(operacao):
     try:
-        if not operacao:
-            raise ValueError("Operação inválida.")
+        # Remove espaços em branco da operação para garantir compatibilidade
+        operacao = operacao.replace(" ", "")
         
-        parts = operacao.split()
-        if len(parts) != 3:
+        # Usa regex para separar os números e o operador, funcionando com ou sem espaços
+        match = re.match(r"(\d+\.?\d*)([+\-*/])(\d+\.?\d*)", operacao)
+        if not match:
             raise ValueError("Formato inválido de operação.")
         
-        num1, operador, num2 = parts
+        # Extrai os números e o operador da operação
+        num1, operador, num2 = match.groups()
         num1, num2 = float(num1), float(num2)
 
+        # Realiza a operação com base no operador
         if operador == "+":
             return str(num1 + num2)
         elif operador == "-":
@@ -31,7 +35,7 @@ def calcular_operacao(operacao):
             return "Erro: Operador inválido."
     except Exception as e:
         return f"Erro: {e}"
-
+    
 # Função para atender um cliente
 def atender_cliente(cliente_socket):
     try:
