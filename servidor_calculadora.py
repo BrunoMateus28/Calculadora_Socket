@@ -54,7 +54,7 @@ def atender_cliente(cliente_socket):
 # Função para reportar carga de CPU do servidor
 def reportar_carga():
     try:
-        carga = psutil.cpu_percent(interval=1)
+        carga = psutil.cpu_percent(interval=0.1)  # Tempo de cálculo reduzido para respostas rápidas
         return str(carga)
     except Exception as e:
         return "Erro ao acessar CPU."
