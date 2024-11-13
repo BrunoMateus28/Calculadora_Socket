@@ -74,11 +74,11 @@ def enviar_requisicao_invalida(servico_host, servico_porta):
     finally:
         cliente_socket.close()
 
-# if __name__ == "__main__":
-#     enviar_requisicao_invalida(host, porta_proxy) # Teste com requisição invalida
+#if __name__ == "__main__":
+#    enviar_requisicao_invalida(host, porta_proxy) # Teste com requisição invalida
 
-# if __name__ == "__main__":
-#     testar_tempo_resposta(host, porta_proxy, 10)  # Teste com 10 requisições
+#if __name__ == "__main__":
+#    testar_tempo_resposta(host, porta_proxy, 10)  # Teste com 10 requisições
 
 
 if __name__ == "__main__":
